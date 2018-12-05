@@ -7,6 +7,7 @@ public class MenuDisplay : MonoBehaviour {
 
     GameObject start;
     GameObject exit;
+    AudioClip music;
 
 
     // Use this for initialization
@@ -24,6 +25,15 @@ public class MenuDisplay : MonoBehaviour {
         exit.transform.position = 2f * -Vector3.up;
         exitCol.size = new Vector3(4, 1, 1);
 
+        music = gameObject.GetComponent<AudioClip>();
+        music = Resources.Load<AudioClip>("bensound-epic");
+        AudioSource musicSource = gameObject.GetComponent<AudioSource>();
+        musicSource = gameObject.AddComponent<AudioSource>();
+        musicSource.clip = music;
+        musicSource.pitch=.5f;
+        musicSource.loop = true;
+        musicSource.Play(0);
+        
     }
 	
 	// Update is called once per frame
