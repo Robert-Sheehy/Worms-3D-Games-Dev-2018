@@ -11,7 +11,7 @@ public class GameManager : MonoBehaviour {
     public GameObject platformPrefab;
     public int xMaxBounds, xMinBounds, zMaxBounds, zMinBounds;
 
-
+    Texture2D surroundingWallTexture, groundTexture;
     // Use this for initialization
     void Start () {
 
@@ -34,7 +34,8 @@ public class GameManager : MonoBehaviour {
     void startGame()
     {
         print("Game Start");
-        Instantiate(groundPrefab, new Vector3(0, 0, 0), Quaternion.identity);
+        //Instantiate(groundPrefab, new Vector3(0, 0, 0), Quaternion.identity);
+        createGround(new Vector3(0, 0, 0), 50, 50);
         spawnSurroundingWalls();
         generateFortress();
         generateBattleground();
@@ -47,10 +48,24 @@ public class GameManager : MonoBehaviour {
 		
 	}
 
+    void createGround(Vector3 position, float width, float depth)
+    {
+        GameObject ourGround = GameObject.CreatePrimitive(PrimitiveType.Plane);
+        Renderer groundRenderer = ourGround.GetComponent<Renderer>();
+        groundTexture = Resources.Load<Texture2D>("GrassShort001_COL_VAR1_1K");
+        groundRenderer.material.mainTexture = groundTexture;
+        groundRenderer.material.mainTextureScale = new Vector2(5, 5);
+        ourGround.transform.position = position;
+        ourGround.transform.localScale = new Vector3(width, 1, depth);
+    }
+
     void createWall(Vector3 position, float height, float width, float depth, Vector3 lookAt)
 
     {
         GameObject ourWall = GameObject.CreatePrimitive(PrimitiveType.Cube);
+        Renderer wallRenderer = ourWall.GetComponent<Renderer>();
+        wallRenderer.material.mainTexture = surroundingWallTexture;
+        wallRenderer.material.mainTextureScale = new Vector2(width/30 ,1);
         ourWall.transform.position = position + (height/2) * Vector3.up;
         ourWall.transform.localScale = new Vector3(width, height, depth);
         ourWall.transform.LookAt(lookAt);
@@ -59,6 +74,7 @@ public class GameManager : MonoBehaviour {
     }
     public void spawnSurroundingWalls() // creates surrounding walls
     {
+        surroundingWallTexture = Resources.Load<Texture2D>("brick");
         createWall(new Vector3(0, 0, 250), 50, 500, 1, new Vector3(0, 25, 0));
         createWall(new Vector3(0, 0, -250), 50, 500, 1, new Vector3(0, 25, 0));
         createWall(new Vector3(250, 0, 0), 50, 500, 1, new Vector3(0, 25, 0));
@@ -89,6 +105,8 @@ public class GameManager : MonoBehaviour {
 
     public void generateBattleground()
     {
+        surroundingWallTexture = Resources.Load<Texture2D>("grey_brick");
+
         //create first pillar
         createWall(new Vector3(45, 0, 40), 20, 10, 1, new Vector3(45, 10, 45));
         createWall(new Vector3(40, 0, 45), 20, 10, 1, new Vector3(45, 10, 45));
@@ -113,9 +131,11 @@ public class GameManager : MonoBehaviour {
         createWall(new Vector3(-45, 0, 50), 20, 10, 1, new Vector3(-45, 10, 45));
         createWall(new Vector3(-50, 0, 45), 20, 10, 1, new Vector3(-45, 10, 45));
 
+        surroundingWallTexture = Resources.Load<Texture2D>("grey_brick_XL");
         //create platform
         createWall(new Vector3(0, 20.5f, 0), 1, 100, 100, new Vector3(100000, 0, 0));//The bigger the x value for lookAt(), the flatter the platform will be
 
+        surroundingWallTexture = Resources.Load<Texture2D>("grey_brick");
         //create first turret
         createWall(new Vector3(40, 21.5f, 30), 10, 20, 1, new Vector3(40, 26.5f, 40));
         createWall(new Vector3(30, 21.5f, 40), 10, 20, 1, new Vector3(40, 26.5f, 40));
@@ -153,8 +173,16 @@ public class GameManager : MonoBehaviour {
         createWall(new Vector3(80, 0, 0), 10, 100, 1, new Vector3(70, 5, 0));
         createWall(new Vector3(70, 0, -50), 10, 20, 1, new Vector3(70, 5, 0));
         createWall(new Vector3(70, 0, 50), 10, 20, 1, new Vector3(70, 5, 0));
-        //create turret platform
+        //create step platform
         createWall(new Vector3(70, 10, 0), 1, 100, 20, new Vector3(100000, 0, 0));//The bigger the x value for lookAt(), the flatter the platform will be
+
+        //create second step
+        createWall(new Vector3(-60, 0, 0), 10, 100, 1, new Vector3(-70, 5, 0));
+        createWall(new Vector3(-80, 0, 0), 10, 100, 1, new Vector3(-70, 5, 0));
+        createWall(new Vector3(-70, 0, -50), 10, 20, 1, new Vector3(-70, 5, 0));
+        createWall(new Vector3(-70, 0, 50), 10, 20, 1, new Vector3(-70, 5, 0));
+        //create step platform
+        createWall(new Vector3(-70, 10, 0), 1, 100, 20, new Vector3(100000, 0, 0));//The bigger the x value for lookAt(), the flatter the platform will be
     }
 
     
