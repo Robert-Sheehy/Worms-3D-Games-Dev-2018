@@ -4,6 +4,8 @@ using UnityEngine;
 
 using UnityEngine.UI;
 
+/*Emma Fitzgerlad*/
+
 public class ScoreScript : MonoBehaviour
 {
     //string current_display_Text = "Score: \n";
