@@ -125,7 +125,7 @@ GameObject:
   - component: {fileID: 4004177413010072}
   - component: {fileID: 198913080667674618}
   - component: {fileID: 199364125990304396}
-  - component: {fileID: 114853746450929136}
+  - component: {fileID: 114998093745131458}
   m_Layer: 0
   m_Name: ModifiableExplosion
   m_TagString: Untagged
@@ -286,18 +286,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   projectileType: 2
---- !u!114 &114853746450929136
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1699728498475170}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 887047fa7c4803745a6454a4f1ae759a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  projectileType: 2
 --- !u!114 &114925039774499088
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -310,6 +298,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   projectileType: 2
+--- !u!114 &114998093745131458
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1699728498475170}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 529ff80507e5ee249b7e34f4e7beaf6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!198 &198048176885649688
 ParticleSystem:
   m_ObjectHideFlags: 1

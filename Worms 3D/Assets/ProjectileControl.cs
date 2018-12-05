@@ -17,6 +17,8 @@ public class ProjectileControl : MonoBehaviour {
 
     float AOE_radius;
     internal enum ProjectileType {Grenade, Missile, Bullet, Mortar };
+
+    private UnityEngine.Object ourExplosion;
     ProjectileType thisProjectile = ProjectileType.Missile;
 
     WormControl ourOwner;
@@ -35,9 +37,9 @@ public class ProjectileControl : MonoBehaviour {
 
     }
 
-    internal void youAreA(ProjectileType projectileType, Vector3 position, Vector3 direction, float speed, WormControl theOwner)
+    internal void youAreA(ProjectileType projectileType, Vector3 position, Vector3 direction, float speed, UnityEngine.Object explosionPrefab, WormControl theOwner)
     {
-
+        ourExplosion = explosionPrefab;
         thisProjectile = projectileType;
         transform.position = position;
         velocity = speed * direction;
@@ -106,7 +108,9 @@ public class ProjectileControl : MonoBehaviour {
 
     public void Explode()
     {
-        print("Im exploding");
+        GameObject boom = (GameObject) Instantiate(ourExplosion);
+        if (boom) print("Created"); else print("Not there");
+        boom.transform.position = transform.position;
 
         Collider[] hitColliders = Physics.OverlapSphere(transform.position, AOE_radius);
 
@@ -136,6 +140,8 @@ public class ProjectileControl : MonoBehaviour {
 
       
     }
+
+
 
     private void OnCollisionEnter(Collision col)
     {
