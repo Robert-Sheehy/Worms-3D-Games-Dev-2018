@@ -40,11 +40,13 @@ public class ItemPickup : MonoBehaviour {
     {
         transform.Rotate(transform.up, turningSpeed * Time.deltaTime);
     }
-    void OnTriggerEnter(Collider wormPickingUp)
+    void OnTriggerEnter(Collider other)             //edited by Liam Dowling and Ian O'Regan, bear in mind there is no pickup items in the main test scene (PlayerControlTest)
     {
-       WormPickuptest  theLuckyWorm =  wormPickingUp.gameObject.GetComponent<WormPickuptest>();
-        theLuckyWorm.justPickedup(thisItemIs, valueOf, numberOf);
-
-        print("Goodbye");
+        if (other.gameObject.CompareTag("Player"))
+        {
+            print("hello");
+            this.gameObject.SetActive(false);
+        }
     }
+
 }
