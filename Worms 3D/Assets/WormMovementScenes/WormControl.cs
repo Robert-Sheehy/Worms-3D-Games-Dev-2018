@@ -21,7 +21,7 @@ public class WormControl : MonoBehaviour {
 
 
     //Define walking speed variable and turning speed variable
-    float walkingSpeed = 2,turningSpeed = 45, jumpForce = 10;
+    float walkingSpeed = 3,turningSpeed = 60, jumpForce = 10;
     private float timeForSlither;
 
     internal void updateTeamColour(int teamId)
@@ -146,11 +146,14 @@ public class WormControl : MonoBehaviour {
                 velocity += wormGravity * Time.deltaTime;
                 transform.position += velocity * Time.deltaTime;
 
-                Vector3 dwn = transform.TransformDirection(Vector3.down);
+                Vector3 dwn = Vector3.down;
                 Debug.DrawRay(transform.position, dwn * 0.70f, Color.white, 1);
-
-                if (Physics.Raycast(transform.position, dwn * 0.70f, 1))
+                RaycastHit info;
+                if (Physics.Raycast(transform.position, dwn * 0.70f, out info, 1))
+                {
                     touchingGround = true;
+                    transform.position = info.point + 1f * Vector3.up;
+                }
                 else
                     touchingGround = false;
                     
@@ -271,10 +274,7 @@ public class WormControl : MonoBehaviour {
 
     private Boolean canJump()
     {
-        if (isAirbourne)
-            return false;
-
-        return true;
+        return !isAirbourne;
     }
     private void jump()
     {
@@ -283,6 +283,7 @@ public class WormControl : MonoBehaviour {
         {
             //Up ward code stuff
             isAirbourne = true;
+            touchingGround = false; 
             velocity += Vector3.up * jumpForce;
         }  
         

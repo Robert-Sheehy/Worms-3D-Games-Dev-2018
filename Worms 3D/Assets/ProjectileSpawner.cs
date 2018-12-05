@@ -89,8 +89,8 @@ public class ProjectileSpawner : MonoBehaviour {
                 {
 
                     print("Camera made");
-                   ourAimCam.transform.Rotate(Vector3.up, Input.GetAxis("Horizontal"));
-                   ourAimCam.transform.Rotate(transform.right, Input.GetAxis("Vertical"));
+                   ourAimCam.updateHorizontalAngle(Input.GetAxis("Horizontal"));
+                   ourAimCam.updateVerticalAngle(Input.GetAxis("Vertical"));
 
                     if (crosshairs)
                     {
