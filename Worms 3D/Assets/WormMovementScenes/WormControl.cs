@@ -5,14 +5,23 @@ using UnityEngine;
 
 public class WormControl : MonoBehaviour {
     //Define the direction the worm is facing and the falling speed (gravity)
-    Vector3 direction, velocity, acceleration;
+    Vector3 direction, velocity, acceleration, wormGravity;
     float AmplitudeForWormSlither = 0.1f;
     float PeriodOfSlither = 1;
+    PlayerControl myController;
+    Team myTeam;
+    ProjectileSpawner Shoot;
+
+    int imOnTeam;
+    int teamMember;
+
+    Boolean isAirbourne = false;
+    Boolean touchingGround = true;
 
 
 
     //Define walking speed variable and turning speed variable
-    float walkingSpeed = 2,turningSpeed = 45, jumpForce = 7;
+    float walkingSpeed = 2,turningSpeed = 45, jumpForce = 10;
     private float timeForSlither;
 
     internal void updateTeamColour(int teamId)
@@ -24,6 +33,7 @@ public class WormControl : MonoBehaviour {
     {
         isActive = v;
         ourHealth.wormActive(isActive);
+        
     }
 
     bool isActive = false;
@@ -40,21 +50,33 @@ public class WormControl : MonoBehaviour {
 
     // Use this for initialization
     void Awake () {
+       // gameObject.SetActive(false);
         ourHealth = gameObject.AddComponent<Health>();
         ourHealth.Iam(this);
-        
+        myController = FindObjectOfType<PlayerControl>();
+
         velocity = new Vector3(0, 7, 0);
         acceleration = new Vector3(0, -9, 0);
+        wormGravity = new Vector3(0, -9.8f, 0);
 
         Movement movementMode;
 
         movementMode = Movement.slither;
 
-
+        Shoot = GetComponent<ProjectileSpawner>();
         /* relocated from health script
          FloatingDisplay ourHealthDisplay;
          */
 
+    }
+
+    //Creates a link between teamInventory and ProjectileSpawner
+    internal void hereIsTeamInventory(Inventory teamInventory)
+    {
+        //Shoot, referenced above, is an instance of ProjectileSpawner
+        //InventoryLink() is a method of ProjectileSpawner.cs
+        //The Parameter teamInventory was provided in Team.cs
+        Shoot.InventoryLink(teamInventory);
     }
 
     internal bool isWormActive()
@@ -65,26 +87,13 @@ public class WormControl : MonoBehaviour {
     // Update is called once per frame
     void Update ()
     {
-        //Insert Switch Case for deciding movement mode of the Controlled Worm
+        
 
-
-        /*
-        switch(somethingCool)
-        {
-            case 1: jumpCode();
-                break;
-            case 2: notJumpCode();
-                break;
-            default: wormMovement();
-                    break;
-        }
-        */
-        //shouldGoForward() method defines the key press (w)
+        
         if (isActive)
         {
 
-    
-            
+            //shouldGoForward() method defines the key press (w)
             if (shouldGoForward())
             {
                 //Applies actual movement equation forward
@@ -128,19 +137,65 @@ public class WormControl : MonoBehaviour {
                 jump();
             }
 
-
             //The movement equation, updates position of the worm on key press
-            transform.position += walkingSpeed * direction /*+ acceleration */* Time.deltaTime;
+            transform.position += walkingSpeed * direction * Time.deltaTime;
 
+            //Decision taken not to disable lateral movement during jump for the retro feel. - Ian
+            if (isAirbourne)
+            {
+                velocity += wormGravity * Time.deltaTime;
+                transform.position += velocity * Time.deltaTime;
+
+                Vector3 dwn = transform.TransformDirection(Vector3.down);
+                Debug.DrawRay(transform.position, dwn * 0.70f, Color.white, 1);
+
+                if (Physics.Raycast(transform.position, dwn * 0.70f, 1))
+                    touchingGround = true;
+                else
+                    touchingGround = false;
+                    
+            }
+            if (touchingGround && isAirbourne)
+            {
+                velocity = Vector3.zero;
+                isAirbourne = false;
+                
+            }
             //This allows the worm to stop when the key is released
-            direction = Vector3.zero;
+            stop();
         }//End isActive
 
     }
 
+    internal void introduction(PlayerControl playerControl)
+    {
+        myController = playerControl;
+    }
+
+    internal void yourDead()
+    {
+        myController.wormDead(this);
+
+        Destroy(gameObject);
+
+    }
+
+
     internal void YoureOnTeam(int j)
     {
       ourHealth.ImOnTeam(j);
+        imOnTeam = j;
+    }
+
+    public int whatisMyTeam()
+    {
+        return imOnTeam;
+    }
+
+    public int whatMemberOfTeam()
+    {
+        teamMember = myTeam.memberId;
+        return teamMember;
     }
 
     private bool shouldStrafeRight()
@@ -201,7 +256,7 @@ public class WormControl : MonoBehaviour {
 
 
         //The movement equation, updates position of the worm on key press
-        transform.position += walkingSpeed * direction + acceleration * Time.deltaTime;
+        transform.position += walkingSpeed * direction * Time.deltaTime;
 
         //This allows the worm to stop when the key is released
         direction = Vector3.zero;
@@ -213,10 +268,29 @@ public class WormControl : MonoBehaviour {
         foreach (Transform child in transform)
             child.localScale = new Vector3(  1 + AmplitudeForWormSlither * Mathf.Sin(((2 * Mathf.PI) * timeForSlither) / PeriodOfSlither)  , 1, 1);
 ;    }
+
+    private Boolean canJump()
+    {
+        if (isAirbourne)
+            return false;
+
+        return true;
+    }
     private void jump()
     {
-        velocity += acceleration * Time.deltaTime;
-        transform.position += velocity * Time.deltaTime;
+
+        if (canJump())
+        {
+            //Up ward code stuff
+            isAirbourne = true;
+            velocity += Vector3.up * jumpForce;
+        }  
+        
+    }
+
+    private void stop()
+    {
+        direction = Vector3.zero;
     }
 
     private bool shouldJump()

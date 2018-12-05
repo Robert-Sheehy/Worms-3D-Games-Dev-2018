@@ -10,8 +10,12 @@ public class FloatingDisplay : MonoBehaviour {
     //string healthValue
     // Use this for initialization
     public GameObject floatingDisplay;
+
+
+
     TextMesh ourText;
-     Health  myHealth;
+    TextMesh grenadeText;
+    Health  myHealth;
 
 
     // int display = System.Convert.ToInt32(myHealth.health);
@@ -21,7 +25,9 @@ public class FloatingDisplay : MonoBehaviour {
 
     void Awake () {
 
+        
 
+        //Original Floating Display Code
         
         floatingDisplay = new GameObject("Floating Display");
         floatingDisplay.transform.parent = transform;
@@ -69,6 +75,11 @@ public class FloatingDisplay : MonoBehaviour {
         {   ourText.text = newText;
             needToUpdateDisplay = false;
             }
+        if(grenadeText)
+        {
+            grenadeText.text = newText;
+            needToUpdateDisplay = false;
+        }
         else
         {
             needToUpdateDisplay = true;
@@ -83,12 +94,15 @@ public class FloatingDisplay : MonoBehaviour {
        
             setDisplay(displayString);
 
+
+
         floatingDisplay.transform.rotation = Quaternion.LookRotation((-Camera.main.transform.position+floatingDisplay.transform.position).normalized);//Camera.main.transform.rotation;
 	}
 
     internal void manuallyDestroy()
     {
         Destroy(floatingDisplay);
+  
         Destroy(this);
     }
 
