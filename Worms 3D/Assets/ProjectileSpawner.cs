@@ -94,7 +94,7 @@ public class ProjectileSpawner : MonoBehaviour {
 
                     if (crosshairs)
                     {
-                        crosshairs.transform.position = ourAimCam.target;
+                        crosshairs.transform.position = ourAimCam.transform.position + 50.0f * ourAimCam.transform.forward;
                     }
                     if (Input.GetMouseButtonDown(0))
                     {
@@ -103,7 +103,7 @@ public class ProjectileSpawner : MonoBehaviour {
 
                         newProjectileScript.youAreA(ProjectileControl.ProjectileType.Missile, ourAimCam.transform.position, (ourAimCam.target -  ourAimCam.transform.position).normalized, 15.0f, ourOwner);
                         DestroyAimCam();
-                     //   ourOwner.setActive(false);
+                        ourOwner.setActive(false);
                     }
                 }
 
