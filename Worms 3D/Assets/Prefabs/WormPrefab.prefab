@@ -42,7 +42,7 @@ GameObject:
   - component: {fileID: 54045966989667068}
   m_Layer: 0
   m_Name: WormPrefab
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -313,4 +313,6 @@ MonoBehaviour:
   grenadePrefab: {fileID: 1379774948088548, guid: b05d6d8c7ad7e9f43b84d1ca85ec5953,
     type: 2}
   MissilePrefab: {fileID: 1247368351994478, guid: c969289fa29df4546be0ec2b20d816b7,
+    type: 2}
+  ExplosionPrefab: {fileID: 1699728498475170, guid: 44e1ffbfbc035b548b0754f6564fd8ed,
     type: 2}

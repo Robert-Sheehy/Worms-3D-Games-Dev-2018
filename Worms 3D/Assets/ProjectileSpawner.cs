@@ -12,6 +12,9 @@ using UnityEngine;
 public class ProjectileSpawner : MonoBehaviour {
     public UnityEngine.Object grenadePrefab;
     public UnityEngine.Object MissilePrefab;
+    public UnityEngine.Object ExplosionPrefab;
+
+
 
     bool firingMissile = false, firingBullet = false;
 
@@ -101,7 +104,7 @@ public class ProjectileSpawner : MonoBehaviour {
                         GameObject newProjectileGO = (GameObject)Instantiate(grenadePrefab);
                         ProjectileControl newProjectileScript = newProjectileGO.GetComponent<ProjectileControl>();
 
-                        newProjectileScript.youAreA(ProjectileControl.ProjectileType.Missile, ourAimCam.transform.position, (ourAimCam.target -  ourAimCam.transform.position).normalized, 15.0f, ourOwner);
+                        newProjectileScript.youAreA(ProjectileControl.ProjectileType.Missile, ourAimCam.transform.position, (ourAimCam.target -  ourAimCam.transform.position).normalized, 15.0f,ExplosionPrefab, ourOwner);
                         DestroyAimCam();
                         ourOwner.setActive(false);
                     }
@@ -228,7 +231,7 @@ public class ProjectileSpawner : MonoBehaviour {
             ProjectileControl newProjectileScript = newProjectileGO.GetComponent<ProjectileControl>();
 
             newProjectileScript.youAreA(ProjectileControl.ProjectileType.Grenade, transform.position  + 2*transform.forward+ 2*transform.up , (transform.forward + Vector3.up).normalized,
-            MaxGrenadeSpeed * strengthMeter.relative(),ourOwner);
+            MaxGrenadeSpeed * strengthMeter.relative(),ExplosionPrefab, ourOwner);
 
             Destroy(strengthMeter);
 

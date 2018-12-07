@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/*Emma Fitzgerald*/
+
 public class ScoreTest : MonoBehaviour
 {
 
