@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Explosion : MonoBehaviour {
-    int projectileType = 3;
+    int projectileType = 2;
     // Use this for initialization
     void Start()
     {

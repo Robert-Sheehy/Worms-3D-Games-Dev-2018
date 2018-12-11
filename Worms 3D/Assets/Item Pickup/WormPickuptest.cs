@@ -32,10 +32,26 @@ public class WormPickuptest : MonoBehaviour
 
 
     }
+    //modified by Liam Dowling t00199360: Will tag the end of my code with "//END"
+   
+
+    
+    //void OnTriggerEnter(Collider other)
+    //{
+    //    if (other.gameObject.CompareTag("Player"))
+    //    {   print("hello");
+    //       other.gameObject.SetActive(false);
+    //    }
+    //}
+    
+    //END
+
+
 
     internal void justPickedup(ItemPickup.itemType thisItemIs, float valueOf, float numberOf)
     {
-      //Add code that is executed by the worm when the item is picked up. For example : Increase health by 50, Ammo by 3, Add Rocket Launcher to Inventory, etc.
+        //Add code that is executed by the worm when the item is picked up. For example : Increase health by 50, Ammo by 3, Add Rocket Launcher to Inventory, etc.
+     
     }
 
 
@@ -46,67 +62,20 @@ public class WormPickuptest : MonoBehaviour
         //Insert Switch Case for deciding movement mode of the Controlled Worm
 
 
-        /*
-        switch(somethingCool)
-        {
-            case 1: jumpCode();
-                break;
-            case 2: notJumpCode();
-                break;
-            default: wormMovement();
-                    break;
-        }
-        */
+    
         //shouldGoForward() method defines the key press (w)
-        if (shouldGoForward())
-        {
-            //Applies actual movement equation forward
-            goForward();
-            wormWalk();
-        }
+        //if (shouldGoForward())
+        //{
+        //    //Applies actual movement equation forward
+        //    goForward();
+        //    wormWalk();
+        //}
 
-        //shouldGoBack() method defines the key press (s)
-        if (shouldGoBackwards())
-        {
-            //Applies actual movement equation backward
-            goBackwards();
-        }
+        ////The movement equation, updates position of the worm on key press
+        //transform.position += walkingSpeed * direction /*+ acceleration */* Time.deltaTime;
 
-        //shouldRotateLeft() method defines the key press (a)
-        if (shouldRotateLeft())
-        {
-            //Applies actual movement equation left
-            rotateLeft();
-        }
-
-        //shouldRotateRight() method defines the key press (d)
-        if (shouldRotateRight())
-        {
-            //Applies actual movement equation right
-            rotateRight();
-        }
-
-        //shouldStrafeLeft() method defines the key press (q)
-        if (shouldStrafeLeft())
-        {
-            strafeLeft();
-        }
-        //shouldStrafeRight() method defines the key press (e)
-        if (shouldStrafeRight())
-        {
-            strafeRight();
-        }
-        if (shouldJump())
-        {
-            jump();
-        }
-
-
-        //The movement equation, updates position of the worm on key press
-        transform.position += walkingSpeed * direction /*+ acceleration */* Time.deltaTime;
-
-        //This allows the worm to stop when the key is released
-        direction = Vector3.zero;
+        ////This allows the worm to stop when the key is released
+        //direction = Vector3.zero;
     }
 
 
@@ -133,105 +102,105 @@ public class WormPickuptest : MonoBehaviour
         direction = -transform.right;
     }
 
-    private void wormMovement()
-    {
-        //shouldGoForward() method defines the key press (w)
-        if (shouldGoForward())
-        {
-            //Applies actual movement equation forward
-            goForward();
-            wormWalk();
-        }
+    //private void wormMovement()
+    //{
+    //    //shouldGoForward() method defines the key press (w)
+    //    if (shouldGoForward())
+    //    {
+    //        //Applies actual movement equation forward
+    //        goForward();
+    //        wormWalk();
+    //    }
 
-        //shouldGoBack() method defines the key press (s)
-        if (shouldGoBackwards())
-        {
-            //Applies actual movement equation backward
-            goBackwards();
-        }
+    //    //shouldGoBack() method defines the key press (s)
+    //    if (shouldGoBackwards())
+    //    {
+    //        //Applies actual movement equation backward
+    //        goBackwards();
+    //    }
 
-        //shouldRotateLeft() method defines the key press (a)
-        if (shouldRotateLeft())
-        {
-            //Applies actual movement equation left
-            rotateLeft();
-        }
+    //    //shouldRotateLeft() method defines the key press (a)
+    //    if (shouldRotateLeft())
+    //    {
+    //        //Applies actual movement equation left
+    //        rotateLeft();
+    //    }
 
-        //shouldRotateRight() method defines the key press (d)
-        if (shouldRotateRight())
-        {
-            //Applies actual movement equation right
-            rotateRight();
-        }
+    //    //shouldRotateRight() method defines the key press (d)
+    //    if (shouldRotateRight())
+    //    {
+    //        //Applies actual movement equation right
+    //        rotateRight();
+    //    }
 
-        if (shouldJump())
-        {
-            jump();
-        }
+    //    if (shouldJump())
+    //    {
+    //        jump();
+    //    }
 
 
         //The movement equation, updates position of the worm on key press
-        transform.position += walkingSpeed * direction + acceleration * Time.deltaTime;
+    //    transform.position += walkingSpeed * direction + acceleration * Time.deltaTime;
 
-        //This allows the worm to stop when the key is released
-        direction = Vector3.zero;
-    }
-    private void wormWalk()
-    {
-        timeForSlither += Time.deltaTime;
-        foreach (Transform child in transform)
-            child.localScale = new Vector3(1 + AmplitudeForWormSlither * Mathf.Sin(((2 * Mathf.PI) * timeForSlither) / PeriodOfSlither), 1, 1);
-        ;
-    }
-    private void jump()
-    {
-        velocity += acceleration * Time.deltaTime;
-        transform.position += velocity * Time.deltaTime;
-    }
+    //    //This allows the worm to stop when the key is released
+    //    direction = Vector3.zero;
+    //}
+    //private void wormWalk()
+    //{
+    //    timeForSlither += Time.deltaTime;
+    //    foreach (Transform child in transform)
+    //        child.localScale = new Vector3(1 + AmplitudeForWormSlither * Mathf.Sin(((2 * Mathf.PI) * timeForSlither) / PeriodOfSlither), 1, 1);
+    //    ;
+    //}
+    //private void jump()
+    //{
+    //    velocity += acceleration * Time.deltaTime;
+    //    transform.position += velocity * Time.deltaTime;
+    //}
 
-    private bool shouldJump()
-    {
-        return Input.GetKeyDown("z");
-    }
+    //private bool shouldJump()
+    //{
+    //    return Input.GetKeyDown("z");
+    //}
 
-    private bool shouldRotateLeft()
-    {
-        return Input.GetKey("a");
-    }
+    //private bool shouldRotateLeft()
+    //{
+    //    return Input.GetKey("a");
+    //}
 
-    private void rotateLeft()
-    {
-        transform.Rotate(transform.up, turningSpeed * Time.deltaTime);
-    }
+    //private void rotateLeft()
+    //{
+    //    transform.Rotate(transform.up, turningSpeed * Time.deltaTime);
+    //}
 
-    private bool shouldRotateRight()
-    {
-        return Input.GetKey("d");
-    }
-    private void rotateRight()
-    {
-        transform.Rotate(transform.up, -turningSpeed * Time.deltaTime);
-    }
+    //private bool shouldRotateRight()
+    //{
+    //    return Input.GetKey("d");
+    //}
+    //private void rotateRight()
+    //{
+    //    transform.Rotate(transform.up, -turningSpeed * Time.deltaTime);
+    //}
 
-    private void goBackwards()
-    {
-        direction = -transform.forward;
-    }
+    //private void goBackwards()
+    //{
+    //    direction = -transform.forward;
+    //}
 
-    private bool shouldGoBackwards()
-    {
-        return Input.GetKey("s");
-    }
+    //private bool shouldGoBackwards()
+    //{
+    //    return Input.GetKey("s");
+    //}
 
-    void goForward()
-    {
+    //void goForward()
+    //{
 
-        direction = transform.forward;
+    //    direction = transform.forward;
 
 
-    }
-    private bool shouldGoForward()
-    {
-        return Input.GetKey("w");
-    }
+    //}
+    //private bool shouldGoForward()
+    //{
+    //    return Input.GetKey("w");
+    //}
 }
